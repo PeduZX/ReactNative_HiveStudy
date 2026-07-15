@@ -121,7 +121,7 @@ export default function Home({ navigation }) {
   <Image
     style={{ borderRadius: 16, width: "85%", height: 200, marginTop: 60 }}
     source={{
-      uri: "https://raw.githubusercontent.com/PeduZX/ReactNativeHIVE/refs/heads/main/frontend/assets/fotoHome.png",
+      uri: "https://raw.githubusercontent.com/PeduZX/ReactNative_HiveStudy/refs/heads/master/frontend/frontend/assets/fotoHome.png",
     }}
   />
 
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingHorizontal: 20,
     paddingVertical: 14,
-    marginTop: "100%",
+    marginTop: 20,
   },
 
   btnLogin: {

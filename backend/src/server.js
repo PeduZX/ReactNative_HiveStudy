@@ -37,20 +37,24 @@ app.post('/loginUsers', (req, res) => {
     const sql = `SELECT * FROM users WHERE email = ?`;
 
     conexao.query(sql, [email], async (erro, resultado) => {
-        if (erro) return res.status(500).json({ mensagem: 'Erro no servidor' });
-        if (resultado.length === 0) return res.status(400).json({ mensagem: 'Email ou senha incorretos' });
-        
+        try {
+            if (erro) return res.status(500).json({ mensagem: 'Erro no servidor' });
+            if (resultado.length === 0) return res.status(400).json({ mensagem: 'Email ou senha incorretos' });
 
-        const usuario = resultado[0];
-        const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+            const usuario = resultado[0];
+            const senhaCorreta = await bcrypt.compare(String(senha), usuario.senha);
 
-        if (!senhaCorreta) {
-            return res.status(400).json({ mensagem: 'Email ou senha incorretos' });
+            if (!senhaCorreta) {
+                return res.status(400).json({ mensagem: 'Email ou senha incorretos' });
+            }
+            res.json({
+                mensagem: 'Login realizado com sucesso',
+                email: usuario.email,
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ mensagem: 'Erro ao processar login' });
         }
-        res.json({
-            mensagem: 'Login realizado com sucesso',
-            email: usuario.email,
-        });
     });
 });
 

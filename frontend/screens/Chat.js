@@ -52,7 +52,7 @@ export default function Chat({ navigation }) {
         <View style={styles.containerMain}>
           <Image
             source={{
-              uri: "https://raw.githubusercontent.com/PeduZX/ReactNativeHIVE/refs/heads/master/assets/Gemini_Generated_Image_xgj9dkxgj9dkxgj9.png",
+              uri: "https://raw.githubusercontent.com/PeduZX/ReactNative_HiveStudy/refs/heads/master/frontend/frontend/assets/Gemini_Generated_Image_xgj9dkxgj9dkxgj9.png",
             }}
             style={styles.imagemBackground}
           />

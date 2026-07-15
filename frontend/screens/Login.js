@@ -19,11 +19,42 @@ import { useNavigation } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
+
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+async function fazerLogin(){
 
+  try{
+    const resposta = await fetch( "http://localhost:3000/loginUsers",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        senha: password,
+      }),
+    });
+
+    const dados = await resposta.json();
+
+    if (resposta.ok) {
+      Alert.alert("Sucesso", dados.mensagem);
+      setTimeout(() =>{
+        navigation.navigate("Home");
+      },2000);
+      return;
+    }
+
+  } catch (error) {
+    console.error(error);
+    Alert.alert("Erro", "Ocorreu um erro ao fazer login. Por favor, tente novamente.");
+    Alert("Erro", "Ocorreu um erro ao fazer login. Por favor, tente novamente.");
+  }
+
+}
 
   return (
     <KeyboardAvoidingView
@@ -88,8 +119,8 @@ export default function Login({ navigation }) {
             </View>
 
             <View style={{ alignItems: "center" }}>
-              <TouchableOpacity style={styles.btnLogin}>
-                <Text style={styles.textLogin}>Entar</Text>
+              <TouchableOpacity style={styles.btnLogin} onPress={fazerLogin}>
+                <Text style={styles.textLogin}>Entrar</Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => navigation.navigate("EsqueceuSenha")}>
