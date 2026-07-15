@@ -121,7 +121,7 @@ export default function Home({ navigation }) {
   <Image
     style={{ borderRadius: 16, width: "85%", height: 200, marginTop: 60 }}
     source={{
-      uri: "https://raw.githubusercontent.com/PeduZX/ReactNative_HiveStudy/refs/heads/master/frontend/frontend/assets/fotoHome.png",
+      uri: "https://raw.githubusercontent.com/PeduZX/ReactNative_HiveStudy/refs/heads/master/frontend/assets/fotoHome.png",
     }}
   />
 
@@ -150,6 +150,12 @@ export default function Home({ navigation }) {
   >
     Junte-se a uma comunidade de estudantes e cresça juntos.
   </Text>
+
+  <View>
+    <Text style={{ fontSize: 14, fontWeight: "400", color: "rgba(255,255,255,0.75)", textAlign: "center", marginTop: 10, lineHeight: 20, backgroundColor: "rgba(255,255,255,0.1)", padding: 10, borderRadius: 8 }}>
+    Acesse a versão web do Hive Study Club para aproveitar todos os recursos disponíveis e se conectar com outros estudantes de forma ainda mais eficiente.
+  </Text>
+  </View>
 </View>
 
         {navbar && (

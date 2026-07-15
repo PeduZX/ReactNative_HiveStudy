@@ -40,7 +40,7 @@ export default function Perfil({ navigation }) {
         <View style={styles.avatarCard}>
         <View style={styles.avatarWrapper}>
           <Image
-            source={{ uri: "https://i.pravatar.cc/150" }}
+            source={{ uri: "***" }}
             style={styles.avatarImg}
           />
           <TouchableOpacity style={styles.avatarBadge}>
