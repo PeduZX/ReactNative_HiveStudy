@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## npm ci Só para baixar o node_modules
 ## npx create-expo-app meuApp --template blank@54 <br/>
 ## npm install @react-navigation/native --legacy-peer-deps <br/>
@@ -10,6 +9,7 @@
 ---------
 ##  Para instalar o SELECT(option)
 <h3>npm install @react-native-picker/picker</h3>
+<h3>npm install react-native-picker-select</h3>
 
 =======
 ## npx create-expo-app meuApp --template blank@54 <br/>
@@ -21,6 +21,9 @@
 
 ---------
 ##  Para instalar o SELECT(option)
-<h3>npm install @react-native-picker/picker</h3>
+<h3> npm install @react-native-picker/picker </h3>
 
->>>>>>> 57323edffca0c2908cc22f85df1f391269f6a3c3
+
+## Para instalar o SELECT(date input)
+npx expo install @react-native-community/datetimepicker
+
