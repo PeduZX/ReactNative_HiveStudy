@@ -307,7 +307,7 @@ export default function Cadastro({ navigation }) {
                 <Text style={styles.textLogin}>Cadastre-se</Text>
               </TouchableOpacity>
 
-              <Text onPress= {} style={{ marginTop: 7, color: "grey" }}>
+              <Text onPress={() => navigation.navigate("Login")} style={{ marginTop: 7, color: "grey" }}>
                 Já tem conta?
               </Text>
             </View>
