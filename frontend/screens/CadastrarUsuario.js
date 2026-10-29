@@ -18,6 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { API_URL } from "../config/api";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,42 +50,38 @@ export default function Cadastro({ navigation }) {
 
   async function cadastroUser() {
     try {
-      const resposta = await fetch(`http://localhost:3000/cadastrarUsers`, {
-        // se eu quiser testar no celular precisa botar o ip da rede
+      if (!name.trim() || !email.trim() || !password || !birthDate) {
+        Alert.alert("Atenção", "Preencha nome, email, senha e data de nascimento.");
+        return null;
+      }
+      const resposta = await fetch(`${API_URL}/cadastrarUsers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nome: name, // nome do banco recebe name que é do useState
-          email: email,
+          nome: name.trim(),
+          email: email.trim().toLowerCase(),
           senha: password,
-          data_nasc: birthDate ? birthDate.toISOString().split("T")[0] : null, // YYYY-MM-DD pro MySQL
+          data_nasc: birthDate.toISOString().split("T")[0],
         }),
       });
       const data = await resposta.json();
-      if (data) {
-        Alert.alert("Sucesso", data.mensagem);
-        console.log("Sucesso", data.mensagem);
-        setRespostaAwait(data.mensagem);
+      if (!resposta.ok) {
+        Alert.alert("Não foi possível cadastrar", data.mensagem || "Tente novamente.");
+        return null;
       }
-      setTimeout(() => {
-        setRespostaAwait("");
-      }, 5000);
-
-      setName("");
-      setEmail("");
-      setPassword("");
-      setBirthDate(null);
+      return data;
     } catch (error) {
       Alert.alert("Erro", "Falha ao conectar com a API");
       console.log(error);
+      return null;
     }
   }
 
-  async function cadastrarFuncoesUser() {
+  async function cadastrarFuncoesUser(usersId) {
     try {
-      const resposta = await fetch("http://localhost:3000/cadastrarAreas", {
+      const resposta = await fetch(`${API_URL}/cadastrarAreas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,21 +89,34 @@ export default function Cadastro({ navigation }) {
         body: JSON.stringify({
           nomeAreaMentorar: mentorar,
           nomeAreaMentorado: serMentorado,
+          users_id: usersId,
         }),
       });
       const data = await resposta.json();
-      if (data) {
-        console.log("Áreas cadastradas:", data.mensagem);
+      if (!resposta.ok) {
+        Alert.alert("Cadastro parcial", data.mensagem || "Não foi possível salvar as áreas.");
+        return false;
       }
+      return true;
     } catch (error) {
       Alert.alert("Erro", "Falha ao conectar com a API");
       console.log(error);
+      return false;
     }
   }
 
   async function finalizarCadastro() {
-    await cadastroUser();
-    await cadastrarFuncoesUser();
+    const usuario = await cadastroUser();
+    if (!usuario) return;
+    const areasSalvas = await cadastrarFuncoesUser(usuario.id);
+    if (!areasSalvas) return;
+    Alert.alert("Sucesso", usuario.mensagem);
+    setRespostaAwait(usuario.mensagem);
+    setTimeout(() => setRespostaAwait(""), 5000);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setBirthDate(null);
   }
 
   return (

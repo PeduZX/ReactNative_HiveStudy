@@ -16,6 +16,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { API_URL } from "../config/api";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,15 +26,18 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
 
 async function fazerLogin(){
-
-  try{
-    const resposta = await fetch( "http://localhost:3000/loginUsers",{
+  if (!email.trim() || !password) {
+    Alert.alert("Atenção", "Informe seu email e sua senha.");
+    return;
+  }
+  try {
+      const resposta = await fetch(`${API_URL}/loginUsers`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
+        email: email.trim().toLowerCase(),
         senha: password,
       }),
     });
@@ -42,18 +46,14 @@ async function fazerLogin(){
 
     if (resposta.ok) {
       Alert.alert("Sucesso", dados.mensagem);
-      setTimeout(() =>{
-        navigation.navigate("Home");
-      },2000);
+      navigation.navigate("Home", { user: dados });
       return;
     }
-
+    Alert.alert("Não foi possível entrar", dados.mensagem || "Confira seu email e sua senha.");
   } catch (error) {
     console.error(error);
     Alert.alert("Erro", "Ocorreu um erro ao fazer login. Por favor, tente novamente.");
-    Alert("Erro", "Ocorreu um erro ao fazer login. Por favor, tente novamente.");
   }
-
 }
 
   return (

@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -12,12 +11,12 @@ import {
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
   const [navbar, setNavbar] = useState(false);
 
   const goTo = (screen) => {
     setNavbar(false);
-    navigation.navigate(screen);
+    navigation.navigate(screen, route?.params?.user ? { user: route.params.user } : undefined);
   };
 
   return (
@@ -160,6 +159,11 @@ export default function Home({ navigation }) {
 
         {navbar && (
           <View style={styles.navbar}>
+
+          <TouchableOpacity onPress={() => goTo("Home")}>
+            <Text style={{ fontSize: 16 }}>Home</Text>
+          </TouchableOpacity>
+
             <TouchableOpacity onPress={() => goTo("Login")}>
               <Text style={{ fontSize: 16 }}>Login</Text>
             </TouchableOpacity>

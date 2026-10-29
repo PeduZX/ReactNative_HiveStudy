@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "./screens/Home";
 import CadastrarUsuario from "./screens/CadastrarUsuario";
-import ListaUsers from "./screens/ListaUsers";
 import Login from "./screens/Login";
 import Chat from "./screens/Chat";
 import Perfil from "./screens/Perfil";
@@ -21,7 +20,6 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="EsqueceuSenha" component={EsquceuSenha} />
         <Stack.Screen name="Chat" component={Chat} />
-        <Stack.Screen name="ListaUsers" component={ListaUsers} />
         <Stack.Screen name="Perfil" component={Perfil} />
       </Stack.Navigator>
     </NavigationContainer>
